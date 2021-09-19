@@ -1,7 +1,0 @@
-name: index
-
-environment:
-  sdk: '>=2.11.0 <3.0.0'
-
-dependencies:
-  characters: ^1.1.0
