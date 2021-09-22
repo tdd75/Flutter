@@ -14,6 +14,8 @@ enum FilterOptions {
 }
 
 class ProductOverviewScreen extends StatefulWidget {
+  static const routeName = '/products-overview';
+
   @override
   _ProductOverviewScreenState createState() => _ProductOverviewScreenState();
 }
@@ -23,32 +25,34 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
   var _isInit = true;
   var _isLoading = false;
 
-  @override
-  void initState() {
-    // Provider.of<Products>(context, listen: false).fetchAndSetProducts();
-    // Future.delayed(Duration.zero).then((_) {
-    //   Provider.of<Products>(context, listen: false).fetchAndSetProducts();
-    // });
-    super.initState();
+  late Future _productsFuture;
+
+  Future _obtainProductsFuture() {
+    return Provider.of<Products>(context, listen: false).fetchAndSetProducts();
   }
 
   @override
-  void didChangeDependencies() {
-    if (_isInit) {
-      setState(() {
-        _isLoading = true;
-      });
-      Provider.of<Products>(context, listen: false)
-          .fetchAndSetProducts()
-          .then((_) {
-        setState(() {
-          _isLoading = false;
-        });
-      });
-    }
-    _isInit = false;
-    super.didChangeDependencies();
+  void initState() {
+    _productsFuture = _obtainProductsFuture();
+    super.initState();
   }
+
+  // @override
+  // void didChangeDependencies() {
+  //   if (_isInit) {
+  //     setState(() {
+  //       _isLoading = true;
+  //     });
+  //
+  //         .then((_) {
+  //       setState(() {
+  //         _isLoading = false;
+  //       });
+  //     });
+  //   }
+  //   _isInit = false;
+  //   super.didChangeDependencies();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -95,9 +99,13 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
         ],
       ),
       drawer: AppDrawer(),
-      body: _isLoading
-          ? Center(child: CircularProgressIndicator())
-          : ProductsGrid(_showOnlyFavorites),
+      body: FutureBuilder(
+        future: _productsFuture,
+        builder: (context, snapshot) =>
+            snapshot.connectionState == ConnectionState.waiting
+                ? Center(child: CircularProgressIndicator())
+                : ProductsGrid(_showOnlyFavorites),
+      ),
     );
   }
 }
