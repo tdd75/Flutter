@@ -38,7 +38,7 @@ class CartScreen extends StatelessWidget {
                               .bodyText1!
                               .color),
                     ),
-                    backgroundColor: Theme.of(context).primaryColor,
+                    backgroundColor: Theme.of(context).colorScheme.primary,
                   ),
                   OrderButton(cart: cart),
                 ],
@@ -83,7 +83,7 @@ class _OrderButtonState extends State<OrderButton> {
           ? Center(child: CircularProgressIndicator())
           : Text(
               'ORDER NOW',
-              style: TextStyle(color: Theme.of(context).primaryColor),
+              style: TextStyle(color: Theme.of(context).colorScheme.primary),
             ),
       onPressed: widget.cart.totalAmount <= 0 || _isLoading
           ? null

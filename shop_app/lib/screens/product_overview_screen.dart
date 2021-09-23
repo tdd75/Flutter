@@ -22,8 +22,8 @@ class ProductOverviewScreen extends StatefulWidget {
 
 class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
   var _showOnlyFavorites = false;
-  var _isInit = true;
-  var _isLoading = false;
+  // var _isInit = true;
+  // var _isLoading = false;
 
   late Future _productsFuture;
 
@@ -56,7 +56,7 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final productContainer = Provider.of<Products>(context, listen: false);
+    // final productContainer = Provider.of<Products>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: Text('MyShop'),

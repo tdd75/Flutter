@@ -22,9 +22,13 @@ class ProductItem extends StatelessWidget {
           );
         },
         child: GridTile(
-          child: Image.network(
-            product.imageUrl,
-            fit: BoxFit.cover,
+          child: Hero(
+            tag: product.id,
+            child: FadeInImage(
+              placeholder: AssetImage('assets/images/shop-icon.png'),
+              image: NetworkImage(product.imageUrl),
+              fit: BoxFit.contain,
+            ),
           ),
           footer: GridTileBar(
             backgroundColor: Colors.black87,
@@ -33,7 +37,7 @@ class ProductItem extends StatelessWidget {
                 icon: Icon(product.isFavorite
                     ? Icons.favorite
                     : Icons.favorite_border),
-                color: Theme.of(context).accentColor,
+                color: Theme.of(context).colorScheme.secondary,
                 onPressed: () async {
                   try {
                     await product.toggleFavoriteStatus(
@@ -52,7 +56,7 @@ class ProductItem extends StatelessWidget {
             ),
             trailing: IconButton(
               icon: Icon(Icons.shopping_cart),
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
               onPressed: () {
                 cart.addItem(product.id, product.title, product.price);
                 ScaffoldMessenger.of(context).hideCurrentSnackBar();

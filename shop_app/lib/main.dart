@@ -12,6 +12,7 @@ import './screens/user_products_screen.dart';
 import './screens/edit_product_screen.dart';
 import './screens/auth_screen.dart';
 import './providers/auth.dart';
+import './helpers/custom_route.dart';
 
 void main() {
   runApp(MyApp());
@@ -43,8 +44,6 @@ class MyApp extends StatelessWidget {
         builder: (ctx, auth, _) => MaterialApp(
           title: 'Shop App',
           theme: ThemeData(
-            primarySwatch: Colors.deepOrange,
-            accentColor: Colors.yellowAccent,
             fontFamily: 'Lato',
             primaryTextTheme: TextTheme(
               bodyText1: TextStyle(
@@ -52,6 +51,13 @@ class MyApp extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
+            colorScheme:
+                ColorScheme.fromSwatch(primarySwatch: Colors.deepOrange)
+                    .copyWith(secondary: Colors.yellow),
+            pageTransitionsTheme: PageTransitionsTheme(builders: {
+              TargetPlatform.android: CustomPageTransitionBuilder(),
+              TargetPlatform.iOS: CustomPageTransitionBuilder(),
+            }),
           ),
           home: auth.isAuth
               ? ProductOverviewScreen()

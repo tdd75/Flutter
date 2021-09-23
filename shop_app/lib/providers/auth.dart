@@ -76,13 +76,15 @@ class Auth with ChangeNotifier {
     if (!prefs.containsKey('userData')) {
       return false;
     }
+    print("TDD75:" + prefs.getString('userData').toString());
+
     final extractedUserData = json.decode(prefs.getString('userData')!);
     final expiryDate =
         DateTime.parse(extractedUserData['expiryDate']!.toString());
-    // if (_expiryDate!.isAfter(DateTime.now())) {
-    //   return false;
-    // }
-
+    if (DateTime.now().isAfter(expiryDate)) {
+      return false;
+    }
+    
     _token = extractedUserData['token'].toString();
     _userId = extractedUserData['userId'].toString();
     _expiryDate = expiryDate;
