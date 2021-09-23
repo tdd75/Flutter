@@ -32,7 +32,7 @@ class ProductDetailScreen extends StatelessWidget {
                 tag: loadedProduct.id,
                 child: Image.network(
                   loadedProduct.imageUrl,
-                  fit: BoxFit.contain,
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
